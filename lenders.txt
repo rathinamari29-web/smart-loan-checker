@@ -1,0 +1,11 @@
+# Lender Policy Configuration File
+# Format: LenderName|MinAge|MaxAge|MinCreditScore|MinMonthlyIncome|MaxEmiRatio|InterestRate|MaxTenureMonths|MaxLoanAmount
+# MaxEmiRatio is expressed as a decimal (e.g., 0.50 = 50% of monthly income)
+# InterestRate is per annum percentage (e.g., 8.5)
+
+SBI Bank|21|60|650|25000|0.50|8.50|360|10000000
+HDFC Bank|22|65|700|30000|0.55|9.25|300|15000000
+ICICI Bank|21|60|680|28000|0.50|8.90|360|12000000
+Axis Bank|21|62|670|27000|0.48|9.10|300|9000000
+Punjab National Bank|18|65|620|20000|0.45|8.40|360|8000000
+Kotak Mahindra Bank|23|60|720|35000|0.60|9.50|240|20000000

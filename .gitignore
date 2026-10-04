@@ -1,0 +1,16 @@
+# Compiled class files & build directories
+bin/
+*.class
+
+# SQLite Database
+*.db
+
+# Dynamic text reports & certificates
+Digital_PreApproval_Certificate_*.txt
+Loan_Assessment_Report_*.txt
+
+# IDE & Editor metadata
+.vscode/
+.idea/
+*.swp
+*.tmp

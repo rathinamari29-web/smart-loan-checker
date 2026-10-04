@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Smart Loan Eligibility & EMI App</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="mobile-container">
+    
+    <!-- Mobile App Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-icon">🏦</div>
+        <div>
+          <div class="brand-title">Smart Loan & EMI App</div>
+          <div class="brand-subtitle">Risk Engine • EMI Tool • Pre-Approval</div>
+        </div>
+      </div>
+      <button id="btn-install-pwa" style="display: none; background: #3b82f6; color: white; border: none; font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 8px; cursor: pointer;">📱 Install</button>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="app-content">
+
+      <!-- TAB 1: APPLY & CALCULATOR -->
+      <section id="tab-apply" class="tab-view active">
+        
+        <!-- Live EMI Preview Card -->
+        <div class="emi-preview-card">
+          <div class="emi-preview-label">Estimated Monthly EMI</div>
+          <div class="emi-preview-amount" id="lbl-live-emi">₹10,624</div>
+          <div class="emi-preview-sub" id="lbl-live-sub">Calculated at standard rate (8.5% p.a.)</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">👤 Applicant Information</div>
+          
+          <div class="form-group">
+            <div class="form-label"><span>Applicant Name</span></div>
+            <input type="text" id="input-name" class="form-control" value="Rahul Sharma">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Age (Years)</span></div>
+            <input type="number" id="input-age" class="form-control" value="28">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Monthly Net Income (₹)</span></div>
+            <input type="number" id="input-income" class="form-control" value="65000">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Credit Score (300-900)</span></div>
+            <input type="number" id="input-score" class="form-control" value="720">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Existing Monthly EMI (₹)</span></div>
+            <input type="number" id="input-existing-emi" class="form-control" value="5000">
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">💰 Loan Configuration</div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Loan Category</span></div>
+            <select id="input-loan-type" class="form-control">
+              <option value="Personal Loan">Personal Loan</option>
+              <option value="Home Loan" selected>Home Loan</option>
+              <option value="Car Loan">Car Loan</option>
+              <option value="Education Loan">Education Loan</option>
+            </select>
+          </div>
+
+          <div class="form-group range-slider-container">
+            <div class="form-label">
+              <span>Loan Amount</span>
+              <span class="slider-val" id="val-amount">₹5,00,000</span>
+            </div>
+            <input type="range" id="slider-amount" class="range-input" min="50000" max="15000000" step="50000" value="500000">
+          </div>
+
+          <div class="form-group range-slider-container" style="margin-top: 14px;">
+            <div class="form-label">
+              <span>Tenure (Months)</span>
+              <span class="slider-val" id="val-tenure">60 Months (5 Yrs)</span>
+            </div>
+            <input type="range" id="slider-tenure" class="range-input" min="12" max="360" step="6" value="60">
+          </div>
+        </div>
+
+        <button id="btn-evaluate" class="btn-primary">⚡ Evaluate Multi-Lender Eligibility</button>
+
+      </section>
+
+      <!-- TAB 2: STANDALONE EMI CALCULATOR TOOL -->
+      <section id="tab-calculator" class="tab-view">
+        <div class="card">
+          <div class="card-title">🧮 Standalone EMI Calculator Tool</div>
+          
+          <div class="form-group">
+            <div class="form-label"><span>Principal Loan Amount (₹)</span></div>
+            <input type="number" id="tool-amount" class="form-control" value="1000000">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Interest Rate (% p.a.)</span></div>
+            <input type="number" id="tool-rate" class="form-control" step="0.1" value="8.5">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Tenure (Months)</span></div>
+            <input type="number" id="tool-tenure" class="form-control" value="240">
+          </div>
+
+          <button id="btn-compute-tool" class="btn-primary" style="margin-top: 8px;">Compute EMI Breakdown</button>
+        </div>
+
+        <div id="tool-results-container"></div>
+      </section>
+
+      <!-- TAB 3: ELIGIBILITY RESULTS -->
+      <section id="tab-results" class="tab-view">
+        <div id="results-banner"></div>
+        <div id="results-list"></div>
+      </section>
+
+      <!-- TAB 4: DOCUMENTS CHECKLIST -->
+      <section id="tab-documents" class="tab-view">
+        <div class="card">
+          <div class="card-title">📄 Required Documents</div>
+          <div id="docs-list-container">
+            <p style="font-size: 13px; color: var(--text-muted);">Perform an evaluation to view loan-specific required documents.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: APPLICATION HISTORY -->
+      <section id="tab-history" class="tab-view">
+        <div class="card" style="padding: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="card-title" style="margin: 0;">💾 History Log</div>
+            <button id="btn-clear-history" style="font-size: 11px; padding: 4px 8px; border: 1px solid #cbd5e1; background: white; border-radius: 6px; cursor: pointer;">Clear</button>
+          </div>
+          <div id="history-container"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Mobile Navigation Bar -->
+    <nav class="bottom-nav">
+      <a class="nav-item active" data-tab="tab-apply">
+        <span class="nav-icon">📝</span>
+        <span>Apply</span>
+      </a>
+      <a class="nav-item" data-tab="tab-calculator">
+        <span class="nav-icon">🧮</span>
+        <span>EMI Tool</span>
+      </a>
+      <a class="nav-item" data-tab="tab-results">
+        <span class="nav-icon">📊</span>
+        <span>Results</span>
+      </a>
+      <a class="nav-item" data-tab="tab-documents">
+        <span class="nav-icon">📄</span>
+        <span>Docs</span>
+      </a>
+      <a class="nav-item" data-tab="tab-history">
+        <span class="nav-icon">📜</span>
+        <span>History</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Registration failed:', err));
+    }
+
+    let deferredPrompt;
+    const btnInstall = document.getElementById('btn-install-pwa');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      btnInstall.style.display = 'block';
+    });
+
+    btnInstall.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          btnInstall.style.display = 'none';
+        }
+        deferredPrompt = null;
+      }
+    });
+  </script>
+</body>
+</html>
